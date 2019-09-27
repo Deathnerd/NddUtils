@@ -35,16 +35,16 @@ function Get-NddResource {
         }
         $RealizedPath = "$RealizedPath\Active\Resources"
         $Locations = @{
-            "BankStatement"          = [DirectoryInfo]"$RealizedPath\22997\";
-            "BasicAutoTable_NoRules" = [DirectoryInfo]"$RealizedPath\23425\";
-            "Claims_Document_Rules"  = [DirectoryInfo]"$RealizedPath\23805\";
-            "Correspondence"         = [DirectoryInfo]"$RealizedPath\23367\";
-            "FlowFrames"             = [DirectoryInfo]"$RealizedPath\23575\";
-            "HTMLFrames"             = [DirectoryInfo]"$RealizedPath\23713\";
-            "HTML_Preview"           = [DirectoryInfo]"$RealizedPath\23566\";
-            "ManyFrames_MsgFocus"    = [DirectoryInfo]"$RealizedPath\23066\";
-            "Simple_AutoTable_Rules" = [DirectoryInfo]"$RealizedPath\23487\";
-            "SimpleLetter"           = [DirectoryInfo]"$RealizedPath\23448\";
+            "BankStatement"          = [IO.DirectoryInfo]"$RealizedPath\22997\";
+            "BasicAutoTable_NoRules" = [IO.DirectoryInfo]"$RealizedPath\23425\";
+            "Claims_Document_Rules"  = [IO.DirectoryInfo]"$RealizedPath\23805\";
+            "Correspondence"         = [IO.DirectoryInfo]"$RealizedPath\23367\";
+            "FlowFrames"             = [IO.DirectoryInfo]"$RealizedPath\23575\";
+            "HTMLFrames"             = [IO.DirectoryInfo]"$RealizedPath\23713\";
+            "HTML_Preview"           = [IO.DirectoryInfo]"$RealizedPath\23566\";
+            "ManyFrames_MsgFocus"    = [IO.DirectoryInfo]"$RealizedPath\23066\";
+            "Simple_AutoTable_Rules" = [IO.DirectoryInfo]"$RealizedPath\23487\";
+            "SimpleLetter"           = [IO.DirectoryInfo]"$RealizedPath\23448\";
         }
         function Filter-Failures([FileInfo[]]$ResultsToFilter) {
             return $ResultsToFilter | Where-Object { $_.FullName -notmatch 'Failures' }
@@ -52,22 +52,22 @@ function Get-NddResource {
         function Sort-Results([FileInfo[]]$ResultsToSort) {
             return $ResultsToSort | Sort-Object -Property LastWriteTime -Descending
         }
-        function Find-Databases([DirectoryInfo]$SearchRoot) {
+        function Find-Databases([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot -Include '*.orig', '*.accdb', '*.mdb' -File -Recurse))
         }
-        function Find-ControlFiles([DirectoryInfo]$SearchRoot) {
+        function Find-ControlFiles([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot -Include '*.opt', '*.dat' -File -Recurse))
         }
-        function Find-Manifests([DirectoryInfo]$SearchRoot) {
+        function Find-Manifests([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot\Baselines\CASManifestFile -File -Recurse))
         }
-        function Find-ResourcePacks([DirectoryInfo]$SearchRoot) {
+        function Find-ResourcePacks([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot\Baselines\CASResourcePack -File -Recurse))
         }
-        function Find-Templates([DirectoryInfo]$SearchRoot) {
+        function Find-Templates([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot\Baselines\CASVersionedTemplate -File -Recurse))
         }
-        function Find-Packages([DirectoryInfo]$SearchRoot) {
+        function Find-Packages([IO.DirectoryInfo]$SearchRoot) {
             return Sort-Results(Filter-Failures(Get-ChildItem $SearchRoot -Include "*.pub" -File -Recurse))
         }
     }
